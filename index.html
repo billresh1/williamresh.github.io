@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>William G. Resh — Public Management & Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1c1c;
+    --ink-secondary: #3d3d3d;
+    --ink-muted: #6b6b6b;
+    --ink-faint: #999;
+    --bg: #fdfdfc;
+    --bg-alt: #f7f6f3;
+    --accent: #1a4480;
+    --accent-muted: #2d6ab6;
+    --rule: #d4d1ca;
+    --rule-light: #e8e5df;
+    --serif: 'Instrument Serif', 'Georgia', 'Times New Roman', serif;
+    --sans: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    --measure: 740px;
+    --wide: 920px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg);
+    font-size: 15.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(253,253,252,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .nav-inner {
+    max-width: var(--wide); margin: 0 auto; padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between; height: 52px;
+  }
+  .nav-name {
+    font-family: var(--serif); font-size: 1.15rem;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.75rem; }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500; color: var(--ink-muted);
+    text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--accent); text-decoration: none; }
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    width: 24px; height: 18px; position: relative; flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block; position: absolute; left: 0; width: 100%; height: 1.5px;
+    background: var(--ink); transition: all 0.3s;
+  }
+  .hamburger span:nth-child(1) { top: 0; }
+  .hamburger span:nth-child(2) { top: 8px; }
+  .hamburger span:nth-child(3) { top: 16px; }
+  .hamburger.open span:nth-child(1) { top: 8px; transform: rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
+  .mobile-menu {
+    display: none; position: fixed; top: 52px;
+    left: 0; right: 0; bottom: 0;
+    background: rgba(253,253,252,0.98);
+    backdrop-filter: blur(20px); z-index: 99;
+    padding: 1.5rem 2rem; flex-direction: column; gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 1rem; color: var(--ink); text-decoration: none;
+    padding: 0.8rem 0; border-bottom: 1px solid var(--rule-light);
+  }
+
+  /* HEADER */
+  .header {
+    max-width: var(--wide); margin: 0 auto;
+    padding: 3.5rem 2rem 2.5rem;
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 2.5rem; align-items: start;
+    border-bottom: 2px solid var(--ink);
+  }
+  .headshot {
+    width: 160px; height: 200px;
+    background: var(--bg-alt); border: 1px solid var(--rule);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--ink-faint); font-size: 0.7rem; gap: 0.4rem;
+  }
+  .headshot svg { opacity: 0.3; }
+  .header-text h1 {
+    font-family: var(--serif); font-size: 2.4rem; font-weight: 400;
+    line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 0.35rem;
+  }
+  .header-role { font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 0.15rem; }
+  .header-affil { font-size: 0.88rem; color: var(--ink-muted); margin-bottom: 1.25rem; line-height: 1.55; }
+  .header-links { display: flex; flex-wrap: wrap; gap: 0.35rem 1.5rem; font-size: 0.82rem; }
+
+  /* SECTIONS */
+  .content { max-width: var(--wide); margin: 0 auto; padding: 0 2rem; }
+  section { padding: 2.5rem 0; border-bottom: 1px solid var(--rule-light); }
+  section:last-of-type { border-bottom: none; }
+  .sec-heading {
+    font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+    letter-spacing: -0.005em; margin-bottom: 1rem; color: var(--ink);
+  }
+  .sec-heading::after {
+    content: ''; display: block; width: 36px; height: 2px;
+    background: var(--accent); margin-top: 0.4rem;
+  }
+
+  /* ABOUT */
+  .about-body {
+    max-width: var(--measure); font-size: 0.95rem;
+    color: var(--ink-secondary); line-height: 1.75;
+  }
+  .about-body strong { color: var(--ink); font-weight: 600; }
+
+  /* RESEARCH */
+  .research-areas { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .research-area { padding: 1rem 1.5rem 1rem 0; border-bottom: 1px solid var(--rule-light); }
+  .research-area:nth-child(even) { padding-left: 1.5rem; padding-right: 0; border-left: 1px solid var(--rule-light); }
+  .research-area:nth-last-child(-n+2) { border-bottom: none; }
+  .research-area h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; margin-bottom: 0.3rem; }
+  .research-area p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* PROJECTS */
+  .project-entry {
+    padding: 0.9rem 0; border-bottom: 1px solid var(--rule-light);
+    display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline;
+  }
+  .project-entry:last-child { border-bottom: none; }
+  .project-entry h3 { font-family: var(--serif); font-size: 1rem; font-weight: 400; line-height: 1.35; }
+  .project-coauthor { font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.1rem; }
+  .project-desc { font-size: 0.83rem; color: var(--ink-muted); margin-top: 0.2rem; line-height: 1.55; max-width: var(--measure); }
+  .tag {
+    font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent); border: 1px solid var(--accent); padding: 0.2rem 0.55rem;
+    border-radius: 3px; white-space: nowrap; line-height: 1;
+  }
+
+  /* PUBLICATIONS */
+  .pub-group { margin-bottom: 2rem; }
+  .pub-group:last-child { margin-bottom: 0; }
+  .pub-group-title {
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--ink-muted);
+    margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--rule);
+  }
+  .pub { padding: 0.6rem 0; }
+  .pub + .pub { border-top: 1px solid var(--rule-light); }
+  .pub h4 { font-family: var(--serif); font-size: 0.97rem; font-weight: 400; line-height: 1.4; }
+  .pub h4 a { color: var(--ink); text-decoration: none; }
+  .pub h4 a:hover { color: var(--accent); text-decoration: underline; }
+  .pub-detail { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.5; margin-top: 0.1rem; }
+  .pub-detail em { font-style: italic; }
+  .pub-award-line { font-size: 0.78rem; color: #8b6914; font-weight: 500; margin-top: 0.15rem; }
+
+  /* AWARDS */
+  .award-row {
+    display: grid; grid-template-columns: 52px 1fr; gap: 1rem;
+    padding: 0.5rem 0; align-items: baseline; font-size: 0.88rem;
+  }
+  .award-row + .award-row { border-top: 1px solid var(--rule-light); }
+  .award-yr { font-weight: 600; color: var(--accent); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .award-desc { color: var(--ink-secondary); line-height: 1.5; }
+
+  /* ENGAGEMENT */
+  .engage-group { margin-bottom: 1.5rem; }
+  .engage-group:last-child { margin-bottom: 0; }
+  .engage-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.35rem; }
+  .engage-title { font-family: var(--serif); font-size: 1.02rem; font-weight: 400; margin-bottom: 0.25rem; }
+  .engage-body { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; max-width: var(--measure); }
+
+  /* CAREER */
+  .career-entry {
+    display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem;
+    padding: 0.9rem 0; align-items: baseline;
+  }
+  .career-entry + .career-entry { border-top: 1px solid var(--rule-light); }
+  .career-dates { font-size: 0.82rem; font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .career-entry h3 { font-family: var(--serif); font-size: 1rem; font-weight: 400; line-height: 1.35; }
+  .career-inst { font-size: 0.85rem; color: var(--ink-muted); margin-top: 0.05rem; }
+  .career-note { font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.2rem; line-height: 1.5; }
+
+  /* GRANTS */
+  .grant-entry {
+    padding: 0.65rem 0; display: grid; grid-template-columns: 1fr auto;
+    gap: 1rem; align-items: baseline;
+  }
+  .grant-entry + .grant-entry { border-top: 1px solid var(--rule-light); }
+  .grant-entry h3 { font-size: 0.92rem; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .grant-detail { font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.1rem; }
+  .grant-amount { font-size: 0.85rem; font-weight: 600; color: var(--ink-secondary); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  /* FOOTER */
+  footer {
+    max-width: var(--wide); margin: 0 auto; padding: 2rem;
+    border-top: 2px solid var(--ink);
+    display: flex; justify-content: space-between;
+    font-size: 0.78rem; color: var(--ink-muted);
+  }
+  footer a { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .header { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 2rem; gap: 1.5rem; }
+    .headshot { width: 120px; height: 150px; }
+    .header-text h1 { font-size: 1.9rem; }
+    .content { padding: 0 1.5rem; }
+    section { padding: 2rem 0; }
+    .research-areas { grid-template-columns: 1fr; }
+    .research-area, .research-area:nth-child(even) { padding: 0.75rem 0; border-left: none; }
+    .project-entry { grid-template-columns: 1fr; }
+    .project-entry .tag { justify-self: start; }
+    .career-entry { grid-template-columns: 1fr; gap: 0.15rem; }
+    .grant-entry { grid-template-columns: 1fr; }
+    .grant-amount { justify-self: start; }
+    footer { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-name">William G. Resh</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#awards">Awards</a>
+      <a href="#engagement">Engagement</a>
+      <a href="#career">Career</a>
+      <a href="#grants">Grants</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#research">Research</a>
+  <a href="#projects">Projects</a>
+  <a href="#publications">Publications</a>
+  <a href="#awards">Awards</a>
+  <a href="#engagement">Engagement</a>
+  <a href="#career">Career</a>
+  <a href="#grants">Grants</a>
+</div>
+
+<header class="header">
+  <div class="headshot">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/>
+    </svg>
+    <span>Photo</span>
+  </div>
+  <div class="header-text">
+    <h1>William G. Resh</h1>
+    <div class="header-role">Chair &amp; Professor of Public Management and Policy</div>
+    <div class="header-affil">
+      Andrew Young School of Policy Studies, Georgia State University<br>
+      Director, CLEAR Initiative · Co-Chair, ARRC · Editor, <em>Journal of Behavioral Public Administration</em>
+    </div>
+    <div class="header-links">
+      <a href="mailto:wresh@gsu.edu">wresh@gsu.edu</a>
+      <a href="https://scholar.google.com/citations?hl=en&user=dcJoFmsAAAAJ" target="_blank">Google Scholar</a>
+      <a href="#" target="_blank">LinkedIn</a>
+      <a href="#" target="_blank">CV (PDF)</a>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+
+<section id="about">
+  <h2 class="sec-heading">About</h2>
+  <div class="about-body">
+    I study how executive power shapes the federal workforce, how bureaucratic discretion operates under legal and political constraints, and what happens to democratic governance when public institutions are hollowed out. My work bridges public administration, American political institutions, and organizational behavior — combining formal theory, quantitative empirics, and normative democratic theory.
+    <br><br>
+    At Georgia State, I direct the <strong>Civic Leadership Education and Research (CLEAR) Initiative</strong> and co-chair the <strong>Accountable Reform Research Consortium (ARRC)</strong>. I serve as Editor of the <em>Journal of Behavioral Public Administration</em>, sit on the Editorial Board of <em>Public Administration Review</em>, and am a member of the Board of Directors of the Public Management Research Association. I am also an External Examiner for the MPA Program at the University of Hong Kong and a Fellow of the Center for Organizational Research and Design at Arizona State University.
+  </div>
+</section>
+
+<section id="research">
+  <h2 class="sec-heading">Research Areas</h2>
+  <div class="research-areas">
+    <div class="research-area">
+      <h3>Executive Politics &amp; the Administrative Presidency</h3>
+      <p>Appointment power, reorganization, political control of the executive branch, and consequences for bureaucratic competence, trust, and democratic accountability.</p>
+    </div>
+    <div class="research-area">
+      <h3>Bureaucratic Politics &amp; Discretion</h3>
+      <p>Delegation, goal ambiguity, judicialization of the administrative state, and post-<em>Loper Bright</em> dynamics in agency decision-making.</p>
+    </div>
+    <div class="research-area">
+      <h3>Civil Service Institutions &amp; Labor Markets</h3>
+      <p>Government shutdown effects, adverse selection, recruitment and retention, generative AI's impact on public employment, and the INSIGHT+ federal workforce database.</p>
+    </div>
+    <div class="research-area">
+      <h3>Democratic Governance &amp; Public Ethics</h3>
+      <p>Executivism, the parallel state, personalist consolidation — how privatization, favoritism, and institutional capture erode constitutional governance.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="sec-heading">Current Projects</h2>
+  <div class="project-entry">
+    <div>
+      <h3>The Parallel State — How Privatization and Political Favoritism Erode American Democracy</h3>
+      <div class="project-coauthor">with Benjamin Brunjes (University of Washington)</div>
+      <div class="project-desc">Book monograph. Proposal invited for review, Cambridge University Press.</div>
+    </div>
+    <span class="tag">Book</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>The Handbook of Executive Politics</h3>
+      <div class="project-desc">Editor and contributing author. In negotiation, Edward Elgar Publishing.</div>
+    </div>
+    <span class="tag">Edited Volume</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>Revisiting JQ Wilson's <em>Bureaucracy</em>: Agency Types, Leadership, and Performance in a Politicized Era</h3>
+      <div class="project-coauthor">with Heejin Cho</div>
+      <div class="project-desc">Under contract, Cambridge University Press (Cambridge Elements).</div>
+    </div>
+    <span class="tag">Under Contract</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>The Politics of the Administrative Process, 10th Edition</h3>
+      <div class="project-coauthor">with Donald Kettl</div>
+      <div class="project-desc">Under contract, SAGE Press. Forthcoming 2027.</div>
+    </div>
+    <span class="tag">Textbook</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>Executivism, the Parallel State, and the Paradoxical Path to Restoring Democratic Accountability</h3>
+      <div class="project-desc">Invited for the <em>ANNALS of the American Academy of Political and Social Science</em>.</div>
+    </div>
+    <span class="tag">Invited</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>The Personalist Presidency and Executive Consolidation: Trumpism's Reshaping of the American Regulatory State</h3>
+      <div class="project-desc">Resubmitted.</div>
+    </div>
+    <span class="tag">Under Review</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>Complementarity, Augmentation, or Substitutivity? The Impact of Generative AI on the U.S. Federal Workforce</h3>
+      <div class="project-coauthor">with Ming, Xia, Overton, Gurbuz &amp; De Bruhl</div>
+      <div class="project-desc">Preprint: <a href="https://arxiv.org/abs/2503.09637">arXiv:2503.09637</a>. Under review.</div>
+    </div>
+    <span class="tag">Under Review</span>
+  </div>
+  <div class="project-entry">
+    <div>
+      <h3>Through a Statute Darkly: Delegation and Goal Ambiguity in Executive Agencies</h3>
+      <div class="project-coauthor">with L. Jason Anastasopoulos</div>
+    </div>
+    <span class="tag">Working Paper</span>
+  </div>
+</section>
+
+<section id="publications">
+  <h2 class="sec-heading">Selected Publications</h2>
+  <div class="pub-group">
+    <div class="pub-group-title">Books &amp; Reports</div>
+    <div class="pub">
+      <h4><a href="https://jhupbooks.press.jhu.edu/content/rethinking-administrative-presidency" target="_blank">Rethinking the Administrative Presidency: Trust, Intellectual Capital, and Appointee-Careerist Relations in the George W. Bush Administration</a></h4>
+      <div class="pub-detail">Johns Hopkins University Press, 2015</div>
+      <div class="pub-award-line">★ Herbert A. Simon Best Book Award, APSA, 2019 · Best Book in Public Administration Research, ASPA, 2017</div>
+    </div>
+    <div class="pub">
+      <h4>Gen AI and the Future of Government Work</h4>
+      <div class="pub-detail">IBM Center for the Business of Government, 2025 (with Gurbuz, Ming, Xia, Overton &amp; De Bruhl)</div>
+    </div>
+  </div>
+  <div class="pub-group">
+    <div class="pub-group-title">Journal Articles</div>
+    <div class="pub">
+      <h4>Integrated Network Solutions in Federal Government Hiring Trends (INSIGHT+)</h4>
+      <div class="pub-detail">Resh, Lee, Ming et al. · <em>Nature: Scientific Data</em>, 2026 (Forthcoming)</div>
+    </div>
+    <div class="pub">
+      <h4>Employee Turnover Effects of the 2018–2019 United States Federal Government Shutdown</h4>
+      <div class="pub-detail">Resh, Ahn, Lee &amp; Wang · <em>Public Administration Review</em>, 2025</div>
+    </div>
+    <div class="pub">
+      <h4>Assessing Political Brand Equity in Policy: Trump and the CDC's "Slow the Spread" Campaign Card</h4>
+      <div class="pub-detail">Resh, Moldogaziev, Marvel &amp; Siew · <em>Politics &amp; Policy</em>, 2025</div>
+    </div>
+    <div class="pub">
+      <h4>Crisis in the U.S. Federal Workforce, the Parallel State, and Ways to Rebuild</h4>
+      <div class="pub-detail">Resh · <em>Review of Public Personnel Administration</em>, 2025</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/gove.12823" target="_blank">Populism and Administrative Dysfunction: The Impact of U.S. Government Shutdowns on Personnel and Policy Implementation</a></h4>
+      <div class="pub-detail">Resh, Ahn &amp; Moynihan · <em>Governance</em>, 2024</div>
+    </div>
+    <div class="pub">
+      <h4>Applying an Intersectional Understanding of Extra Work Behavior and Emotional Burnout in Local Public Service</h4>
+      <div class="pub-detail">An, Barboza-Wilkes &amp; Resh · <em>Public Administration</em>, 2024</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://academic.oup.com/jpart/article/33/1/85/6562381" target="_blank">Deconstructing Burnout at the Intersections of Race, Gender, and Generation in Local Government</a></h4>
+      <div class="pub-detail">Barboza-Wilkes, Le &amp; Resh · <em>Journal of Public Administration Research &amp; Theory</em>, 2023</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://academic.oup.com/jpart/article/32/3/569/6380787" target="_blank">Anticipated Adjudication: An Analysis of the Judicialization of the US Administrative State</a></h4>
+      <div class="pub-detail">Limbocker, Resh &amp; Selin · <em>Journal of Public Administration Research and Theory</em>, 2022</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://onlinelibrary.wiley.com/doi/10.1111/psq.12769" target="_blank">The Pivotal and Distributive Politics of Senate-Confirmed Appointee Vacancies</a></h4>
+      <div class="pub-detail">Resh, Napolio &amp; Lee · <em>Presidential Studies Quarterly</em>, 2022</div>
+    </div>
+    <div class="pub">
+      <h4>Appointee Vacancies in U.S. Executive Agencies</h4>
+      <div class="pub-detail">Resh, Hollibaugh, Roberts &amp; Dull · <em>Journal of Public Policy</em>, 2021</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://onlinelibrary.wiley.com/doi/10.1111/puar.12882" target="_blank">The Persistence of Prosocial Work Efforts as a Function of Mission Match</a></h4>
+      <div class="pub-detail">Resh, Marvel &amp; Wen · <em>Public Administration Review</em>, 2018</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://academic.oup.com/jpart/article-abstract/26/4/677/2222610" target="_blank">A Systems Theory Approach to Innovation Implementation: Why Organizational Location Matters</a></h4>
+      <div class="pub-detail">Moldogaziev &amp; Resh · <em>Journal of Public Administration Research and Theory</em>, 2016</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://onlinelibrary.wiley.com/doi/10.1111/puar.12368" target="_blank">Assessing the Past and Promise of the Federal Employee Viewpoint Survey for Public Management Research</a></h4>
+      <div class="pub-detail">Fernandez, Resh, Moldogaziev &amp; Oberfield · <em>Public Administration Review</em>, 2015</div>
+      <div class="pub-award-line">★ Mosher Award for Best Article in <em>PAR</em>, ASPA, 2016</div>
+    </div>
+    <div class="pub">
+      <h4><a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6210.2012.02623.x" target="_blank">No Solutions, Only Trade-Offs? Evidence about Goal Conflict in Street-level Bureaucracies</a></h4>
+      <div class="pub-detail">Resh &amp; Pitts · <em>Public Administration Review</em>, 2013</div>
+    </div>
+    <div class="pub">
+      <h4 style="color: var(--ink-faint); font-style: italic;">Full list of 30+ publications on <a href="https://scholar.google.com/citations?hl=en&user=dcJoFmsAAAAJ">Google Scholar</a></h4>
+    </div>
+  </div>
+  <div class="pub-group">
+    <div class="pub-group-title">Editorial Roles</div>
+    <div class="pub">
+      <h4>Editor, <em>Journal of Behavioral Public Administration</em> (2024–2026; Editor-in-Chief, 2021–2024)</h4>
+      <div class="pub-detail">First EIC following founding editors. Managed sale of journal to APSA for permanent open-access status.</div>
+    </div>
+    <div class="pub">
+      <h4>Editorial Board, <em>Public Administration Review</em> (2026–2028)</h4>
+    </div>
+    <div class="pub">
+      <h4>Co-Creator &amp; Editor, <em>3 Streams</em> (2020–Present)</h4>
+      <div class="pub-detail">Online magazine at the convergence of politics, policy, and ideas. Avg. 3,700 views/month in 2024.</div>
+    </div>
+  </div>
+</section>
+
+<section id="awards">
+  <h2 class="sec-heading">Selected Honors &amp; Awards</h2>
+  <div class="awards-list">
+    <div class="award-row"><div class="award-yr">2024</div><div class="award-desc">Herbert Kaufman Best Paper Award, Section on Public Administration, APSA</div></div>
+    <div class="award-row"><div class="award-yr">2024</div><div class="award-desc">IBM Business of Government Research Report Stipend</div></div>
+    <div class="award-row"><div class="award-yr">2022</div><div class="award-desc">H. George Frederickson Best Article Award, ASPA</div></div>
+    <div class="award-row"><div class="award-yr">2020</div><div class="award-desc">C. C. Crawford Chair of Management and Performance, USC</div></div>
+    <div class="award-row"><div class="award-yr">2019</div><div class="award-desc">Herbert A. Simon Best Book Award, APSA</div></div>
+    <div class="award-row"><div class="award-yr">2017</div><div class="award-desc">Best Book in Public Administration Research, ASPA</div></div>
+    <div class="award-row"><div class="award-yr">2016</div><div class="award-desc">Mosher Award for Best Article in <em>Public Administration Review</em>, ASPA</div></div>
+    <div class="award-row"><div class="award-yr">2012</div><div class="award-desc">George C. Edwards III Dissertation Award, APSA</div></div>
+    <div class="award-row"><div class="award-yr">2012</div><div class="award-desc">Best Dissertation Award, Public &amp; Nonprofit Division, Academy of Management</div></div>
+    <div class="award-row"><div class="award-yr">2011</div><div class="award-desc">Paul A. Volcker Junior Research Grant Award, APSA</div></div>
+  </div>
+</section>
+
+<section id="engagement">
+  <h2 class="sec-heading">Public Engagement &amp; Media</h2>
+  <div class="engage-group">
+    <div class="engage-label">Congressional Testimony</div>
+    <div class="engage-title">U.S. House Committee on Oversight and Government Reform</div>
+    <div class="engage-body">Expert witness testimony on "Rightsizing the Federal Government" (February 2025) with written follow-up to committee members (March 2025). Written statement for House Subcommittee on "Rebuilding the Federal Workforce" (2021). Written commentary to the UN Committee of Experts in Public Administration, 23rd Session (2023).</div>
+  </div>
+  <div class="engage-group">
+    <div class="engage-label">Keynote Addresses</div>
+    <div class="engage-title">Recent Invited Lectures</div>
+    <div class="engage-body">"From Hype to Human-AI Teams," Anhui University (2025). "Balancing Act: Managing Stress and Preventing Burnout in Public Finance," GFOA (2025). "The Supreme Court Reverses Chevron Deference," University of Baltimore Rosenberg Lecture (2025). "Data and the Deconstruction of Government," KU Center for Democratic Governance (2025). Additional talks at Caltech, Bocconi, Syracuse Maxwell School, FIU, and more.</div>
+  </div>
+  <div class="engage-group">
+    <div class="engage-label">Press &amp; Media</div>
+    <div class="engage-title">Regular commentary on executive power, DOGE, and the federal workforce</div>
+    <div class="engage-body">Featured in the <em>New York Times</em>, <em>Los Angeles Times</em>, <em>Financial Times</em>, <em>BBC World News</em>, <em>Bloomberg Law</em>, <em>Associated Press</em>, <em>Politico</em>, <em>Washington Monthly</em>, <em>Atlanta Journal-Constitution</em>, <em>San Francisco Chronicle</em>, <em>MarketWatch</em>, <em>Federal News Network</em>, <em>FedScoop</em>, and international outlets including ABC Australia, CBC Canada, and BeFM Korea.</div>
+  </div>
+  <div class="engage-group">
+    <div class="engage-label">Op-Eds &amp; Public Writing</div>
+    <div class="engage-body">"Why the Federal Worker Buyouts Are No Panacea for the U.S. Budget" (<em>Los Angeles Times</em>). "Trump's Blunderbuss War on DEI" (<em>Washington Monthly</em>). "Trump's war on government workers threatens every American" (<em>Baltimore Sun</em>). "How Will DRPs Impact Agencies?" (<em>3 Streams</em>). Additional pieces in <em>GovExec</em>, <em>Federal News Network</em>, and <em>The 74</em>.</div>
+  </div>
+</section>
+
+<section id="career">
+  <h2 class="sec-heading">Academic Career</h2>
+  <div class="career-entry">
+    <div class="career-dates">2025 – Present</div>
+    <div>
+      <h3>Chair &amp; Full Professor, Public Management and Policy</h3>
+      <div class="career-inst">Georgia State University · Andrew Young School of Policy Studies</div>
+      <div class="career-note">Director, CLEAR Initiative. Co-Founder &amp; Co-Chair, ARRC. Faculty Affiliate, Dept. of Political Science. Member, AYS Executive Committee. Chair, Task Force on Doctoral Education.</div>
+    </div>
+  </div>
+  <div class="career-entry">
+    <div class="career-dates">2018 – 2025</div>
+    <div>
+      <h3>Associate/Full Professor; C. C. Crawford Professorship (2020–2025)</h3>
+      <div class="career-inst">University of Southern California · Sol Price School of Public Policy</div>
+      <div class="career-note">Founded CLEAR Initiative. Director, "On the Rhine" overseas program at Speyer University (2012–2020). Co-Founder, WePARG. Chair, NASPAA Policy Issues Committee (2019–2024).</div>
+    </div>
+  </div>
+  <div class="career-entry">
+    <div class="career-dates">2014 – 2018</div>
+    <div>
+      <h3>Assistant Professor of Public Policy and Management</h3>
+      <div class="career-inst">University of Southern California · Sol Price School of Public Policy</div>
+    </div>
+  </div>
+  <div class="career-entry">
+    <div class="career-dates">2012 – 2020</div>
+    <div>
+      <h3>Visiting Professor (Summers)</h3>
+      <div class="career-inst">Deutsche Universität für Verwaltungswissenschaften, Speyer, Germany</div>
+    </div>
+  </div>
+  <div class="career-entry">
+    <div class="career-dates">2011 – 2014</div>
+    <div>
+      <h3>Assistant Professor of Public Management</h3>
+      <div class="career-inst">Indiana University · O'Neill School of Public and Environmental Affairs</div>
+    </div>
+  </div>
+  <div class="career-entry">
+    <div class="career-dates">Education</div>
+    <div>
+      <h3>PhD, Public Administration &amp; American Politics · American University, 2011</h3>
+      <div class="career-note">MPA, Public Policy &amp; Administration · University of Baltimore, 2007<br>BA, English Literature &amp; Sociology · West Virginia University, 1997</div>
+    </div>
+  </div>
+</section>
+
+<section id="grants">
+  <h2 class="sec-heading">Selected Research Grants</h2>
+  <div class="grant-entry">
+    <div>
+      <h3>Accountability and Reform Research Consortium (ARRC)</h3>
+      <div class="grant-detail">The Volcker Alliance &amp; Luce Foundation · 2025–2026</div>
+    </div>
+    <div class="grant-amount">$272,000</div>
+  </div>
+  <div class="grant-entry">
+    <div>
+      <h3>CLEAR Post-doctoral Fellowship</h3>
+      <div class="grant-detail">U.S. General Services Administration, Office of Evaluation Services · 2022–2025</div>
+    </div>
+    <div class="grant-amount">$404,000</div>
+  </div>
+  <div class="grant-entry">
+    <div>
+      <h3>Estimating the Public Sector Workforce Labor Market: Los Angeles Region</h3>
+      <div class="grant-detail">Haynes Foundation · 2021–2022</div>
+    </div>
+    <div class="grant-amount">$152,849</div>
+  </div>
+  <div class="grant-entry">
+    <div>
+      <h3>Bringing Citizens to the Table: Local Government Employee Engagement</h3>
+      <div class="grant-detail">Haynes Foundation · 2017–2020</div>
+    </div>
+    <div class="grant-amount">$155,780</div>
+  </div>
+  <div class="grant-entry">
+    <div>
+      <h3>Estimating the Federal Workforce Labor Market</h3>
+      <div class="grant-detail">The Volcker Alliance · 2022–2024</div>
+    </div>
+    <div class="grant-amount">$73,000</div>
+  </div>
+  <div class="grant-entry">
+    <div>
+      <h3>Assessing the Impacts of Generative AI on the Federal Labor Market</h3>
+      <div class="grant-detail">IBM Center for the Business of Government · 2024</div>
+    </div>
+    <div class="grant-amount">$20,000</div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <span>&copy; 2026 William G. Resh · 55 Park Place NE, Suite 456, Atlanta, GA 30303</span>
+  <span><a href="mailto:wresh@gsu.edu">wresh@gsu.edu</a> · <a href="https://scholar.google.com/citations?hl=en&user=dcJoFmsAAAAJ" target="_blank">Google Scholar</a></span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
