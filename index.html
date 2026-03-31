@@ -97,12 +97,11 @@
     border-bottom: 2px solid var(--ink);
   }
   .headshot {
-    width: 160px; height: 200px;
-    background: var(--bg-alt); border: 1px solid var(--rule);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    color: var(--ink-faint); font-size: 0.7rem; gap: 0.4rem;
-  }
+  width: 160px; height: 200px;
+  border: 1px solid var(--rule);
+  object-fit: cover;
+  object-position: top;
+}
   .headshot svg { opacity: 0.3; }
   .header-text h1 {
     font-family: var(--serif); font-size: 2.4rem; font-weight: 400;
@@ -270,7 +269,7 @@
 </div>
 
 <header class="header">
-  <div class="headshot">
+<img class="headshot" src="officeselfie.jpg" alt="William G. Resh">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
       <circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/>
     </svg>
